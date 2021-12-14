@@ -7,68 +7,68 @@
 //#pragma comment(lib,"F:\\VC6.0PROJECT\\szsc_server\\Debug\\fight_room.lib")
 //_declspec(dllexport) void start_fight(client_member* p,fight_room* this_room);
 
-//½øĞĞÍ¨Ñ¶
-void communicate_with_this_client_O(client_member* c1)//·¢ËÍÄÚÈİ"ÏµÍ³³¬ÔØÀ²\n"
+//è¿›è¡Œé€šè®¯
+void communicate_with_this_client_O(client_member* c1)//å‘é€å†…å®¹"ç³»ç»Ÿè¶…è½½å•¦\n"
 {
-	send(g_ClientSocket[c1->member_No-1],"ÏµÍ³³¬ÔØÀ²\n", (1 + ::strlen("ÏµÍ³³¬ÔØÀ²\n")), 0);
+	send(g_ClientSocket[c1->member_No-1],"ç³»ç»Ÿè¶…è½½å•¦\n", (1 + ::strlen("ç³»ç»Ÿè¶…è½½å•¦\n")), 0);
 }
 
-void communicate_with_this_client(client_member* c1)//·şÎñÆ÷Óë¿Í»§¶Ë½øĞĞ¹µÍ¨
+void communicate_with_this_client(client_member* c1)//æœåŠ¡å™¨ä¸å®¢æˆ·ç«¯è¿›è¡Œæ²Ÿé€š
 {
-	char StrBuf[MAX_PATH] = { 0 };//¶¨Òå±äÁ¿´æ´¢½ÓÊÕµ½µÄÊı¾İ
-	char Buf[MAX_PATH] = { 0 };//×¨ÃÅÓÃÓÚ×ª»»·Ç×Ö·ûĞÎÊ½ÊıÖµÎª×Ö·û
+	char StrBuf[MAX_PATH] = { 0 };//å®šä¹‰å˜é‡å­˜å‚¨æ¥æ”¶åˆ°çš„æ•°æ®
+	char Buf[MAX_PATH] = { 0 };//ä¸“é—¨ç”¨äºè½¬æ¢éå­—ç¬¦å½¢å¼æ•°å€¼ä¸ºå­—ç¬¦
 	int choice,count;
 
-	c1->listen_this=CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)listen_client_message,c1, NULL, NULL);//¿ªÊ¼¼àÌıÏß³Ì
+	c1->listen_this=CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)listen_client_message,c1, NULL, NULL);//å¼€å§‹ç›‘å¬çº¿ç¨‹
 
-	special_signal(c1,start_link);//½«Êı×ÖÇ¿ÖÆ×ª»»Îª×Ö·û,³õ´Î¼¤»î
+	special_signal(c1,start_link);//å°†æ•°å­—å¼ºåˆ¶è½¬æ¢ä¸ºå­—ç¬¦,åˆæ¬¡æ¿€æ´»
 	Sleep(100);
 	memset(StrBuf,0,sizeof(StrBuf));
-	addtext(StrBuf,get_client_message(c1));if(c1->F_offline){client_offline(c1);return;}//»ñÈ¡ÓÃ»§ÊäÈëĞÅÏ¢£¬Èô¶ÏÏßÔò½áÊø¹µÍ¨
+	addtext(StrBuf,get_client_message(c1));if(c1->F_offline){client_offline(c1);return;}//è·å–ç”¨æˆ·è¾“å…¥ä¿¡æ¯ï¼Œè‹¥æ–­çº¿åˆ™ç»“æŸæ²Ÿé€š
 	choice=atoi(StrBuf);
 	switch(choice)
 	{
-		case android_phone:c1->device=android_phone;cout<<"°²×¿¶ËÉè±¸!\n";break;
-		case win_console:c1->device=win_console;cout<<"win_console¶ËÉè±¸!\n";break;
-		default:cout<<"Î´ÄÜÊ¶±ğ¸ÃÉè±¸!Ç¿ÖÆ¶Ï¿ªÁ¬½Ó!\n";client_offline(c1);return;
+		case android_phone:c1->device=android_phone;cout<<"å®‰å“ç«¯è®¾å¤‡!\n";break;
+		case win_console:c1->device=win_console;cout<<"win_consoleç«¯è®¾å¤‡!\n";break;
+		default:cout<<"æœªèƒ½è¯†åˆ«è¯¥è®¾å¤‡!å¼ºåˆ¶æ–­å¼€è¿æ¥!\n";client_offline(c1);return;
 	}
-	//memset(StrBuf,0,sizeof(StrBuf));addtext(StrBuf,"ÄãÊÇµÚ");addtext(StrBuf,client_number);addtext(StrBuf,"¸ö£¡£¡£¡\n");confirm_send_success(c1,StrBuf);
+	//memset(StrBuf,0,sizeof(StrBuf));addtext(StrBuf,"ä½ æ˜¯ç¬¬");addtext(StrBuf,client_number);addtext(StrBuf,"ä¸ªï¼ï¼ï¼\n");confirm_send_success(c1,StrBuf);
 
 	memset(c1->client_name,0,sizeof(c1->client_name));
-	while(true)//ÓÃ»§ÊäÈëÓÃ»§ÃûËÀÑ­»·£¬Ö±µ½ÊäÈëÕıÈ·µÄÓÃ»§ÃûÎªÖ¹
+	while(true)//ç”¨æˆ·è¾“å…¥ç”¨æˆ·åæ­»å¾ªç¯ï¼Œç›´åˆ°è¾“å…¥æ­£ç¡®çš„ç”¨æˆ·åä¸ºæ­¢
 	{
 		memset(StrBuf,0,sizeof(StrBuf));
-		addtext(StrBuf,get_client_message(c1));if(c1->F_offline){client_offline(c1);return;}//»ñÈ¡ÓÃ»§ÊäÈëĞÅÏ¢£¬Èô¶ÏÏßÔò½áÊø¹µÍ¨
-		//µÇ¼ÇÓÃ»§Ãû¿ªÊ¼
-		if(strlen(StrBuf)<=0){confirm_send_success(c1,"ÓÃ»§Ãû²»ÄÜÎª¿Õ!\nÇëÖØĞÂÊäÈë:");continue;}
-		if(strlen(StrBuf)<sizeof(c1->client_name))//sizeof()ÊÇÕû¸ö×î´óÈİÁ¿´óĞ¡£¬strlen()ÊÇÍ³¼Æµ±Ç°×Ö·û´®³¤¶Èµ½\0ÎªÖ¹
-		{addtext(c1->client_name,StrBuf);break;}//µÇ¼Ç³É¹¦£¬ÍË³öÓÃ»§ÊäÈëÓÃ»§ÃûËÀÑ­»·
-		confirm_send_success(c1,"ÓÃ»§ÊäÈë³¤¶È³¬³öÉÏÏŞ!\n");
+		addtext(StrBuf,get_client_message(c1));if(c1->F_offline){client_offline(c1);return;}//è·å–ç”¨æˆ·è¾“å…¥ä¿¡æ¯ï¼Œè‹¥æ–­çº¿åˆ™ç»“æŸæ²Ÿé€š
+		//ç™»è®°ç”¨æˆ·åå¼€å§‹
+		if(strlen(StrBuf)<=0){confirm_send_success(c1,"ç”¨æˆ·åä¸èƒ½ä¸ºç©º!\nè¯·é‡æ–°è¾“å…¥:");continue;}
+		if(strlen(StrBuf)<sizeof(c1->client_name))//sizeof()æ˜¯æ•´ä¸ªæœ€å¤§å®¹é‡å¤§å°ï¼Œstrlen()æ˜¯ç»Ÿè®¡å½“å‰å­—ç¬¦ä¸²é•¿åº¦åˆ°\0ä¸ºæ­¢
+		{addtext(c1->client_name,StrBuf);break;}//ç™»è®°æˆåŠŸï¼Œé€€å‡ºç”¨æˆ·è¾“å…¥ç”¨æˆ·åæ­»å¾ªç¯
+		confirm_send_success(c1,"ç”¨æˆ·è¾“å…¥é•¿åº¦è¶…å‡ºä¸Šé™!\n");
 	}
-	cout<<"ÓÃ»§Ãû:"<<c1->client_name<<endl;
-	//ÓÃ»§ÊäÈëÓÃ»§ÃûËÀÑ­»·½áÊø
+	cout<<"ç”¨æˆ·å:"<<c1->client_name<<endl;
+	//ç”¨æˆ·è¾“å…¥ç”¨æˆ·åæ­»å¾ªç¯ç»“æŸ
 
-	while(true)//Ñ¡Ôñ¿ªÊ¼ËÀÑ­»·
+	while(true)//é€‰æ‹©å¼€å§‹æ­»å¾ªç¯
 	{
 			
-			//"\nÄã¿ÉÒÔ×ö³öÒÔÏÂÑ¡Ôñ£º\n";
+			//"\nä½ å¯ä»¥åšå‡ºä»¥ä¸‹é€‰æ‹©ï¼š\n";
 			//"|-------------------------------------------------------------------------|\n";
-			//"|  Ñ¡1£º´´½¨×Ô¼ºµÄ·¿¼ä         Ñ¡2£º¼ÓÈë±ğÈËµÄ·¿¼ä           Ñ¡3£ºÍË³ö·¿¼ä|\n";
+			//"|  é€‰1ï¼šåˆ›å»ºè‡ªå·±çš„æˆ¿é—´         é€‰2ï¼šåŠ å…¥åˆ«äººçš„æˆ¿é—´           é€‰3ï¼šé€€å‡ºæˆ¿é—´|\n";
 			//"|                                                                         |\n";
-			//"|  Ñ¡3£ºÍË³ö·¿¼ä               Ñ¡4£ºË¢ĞÂÍæ¼ÒÁĞ±í£©           Ñ¡5£º¿ªÊ¼Õ½¶·|\n";
+			//"|  é€‰3ï¼šé€€å‡ºæˆ¿é—´               é€‰4ï¼šåˆ·æ–°ç©å®¶åˆ—è¡¨ï¼‰           é€‰5ï¼šå¼€å§‹æˆ˜æ–—|\n";
 			//"|-------------------------------------------------------------------------|\n";
-			//"ÇëÑ¡Ôñ:";
+			//"è¯·é€‰æ‹©:";
 		if(c1->device!=android_phone)special_signal(c1,show_choice);
 
-		cout<<"¿ªÊ¼¼àÌıÓÃ»§Ñ¡Ôñ\n";
+		cout<<"å¼€å§‹ç›‘å¬ç”¨æˆ·é€‰æ‹©\n";
 
 			memset(StrBuf,0,sizeof(StrBuf));
-			addtext(StrBuf,get_client_message(c1));if(c1->F_offline){client_offline(c1);return;}//»ñÈ¡ÓÃ»§ÊäÈëĞÅÏ¢£¬Èô¶ÏÏßÔò½áÊø¹µÍ¨
-			cout<<"¿Í»§¶Ë·¢À´ÏûÏ¢£º"<<StrBuf<<endl;
-			if(c1->state==in_game)//´ËÅĞ¶¨Í¨¹ı£¬±ØÈ»ÊÇ·¿¼ä±ö¿Í½øÈëÁËÓÎÏ·
+			addtext(StrBuf,get_client_message(c1));if(c1->F_offline){client_offline(c1);return;}//è·å–ç”¨æˆ·è¾“å…¥ä¿¡æ¯ï¼Œè‹¥æ–­çº¿åˆ™ç»“æŸæ²Ÿé€š
+			cout<<"å®¢æˆ·ç«¯å‘æ¥æ¶ˆæ¯ï¼š"<<StrBuf<<endl;
+			if(c1->state==in_game)//æ­¤åˆ¤å®šé€šè¿‡ï¼Œå¿…ç„¶æ˜¯æˆ¿é—´å®¾å®¢è¿›å…¥äº†æ¸¸æˆ
 			{
 				start_fight(c1,&player_room[c1->room_No]);
-				c1->state=in_room;//ÓÎÏ·½áÊø£¬»Øµ½·¿¼ä×´Ì¬
+				c1->state=in_room;//æ¸¸æˆç»“æŸï¼Œå›åˆ°æˆ¿é—´çŠ¶æ€
 
 				if(c1->device!=android_phone)special_signal(c1,show_choice);
 				continue;
@@ -82,191 +82,197 @@ void communicate_with_this_client(client_member* c1)//·şÎñÆ÷Óë¿Í»§¶Ë½øĞĞ¹µÍ¨
 
 				break;
 
-			case 1://´´½¨·¿¼ä
-				if(c1->device!=android_phone)confirm_send_success(c1,"ÄúÑ¡ÔñÁË´´½¨·¿¼ä!\n");
+			case 1://åˆ›å»ºæˆ¿é—´
+				if(c1->device!=android_phone)confirm_send_success(c1,"æ‚¨é€‰æ‹©äº†åˆ›å»ºæˆ¿é—´!\n");
 				if(c1->state==in_room)
-				{confirm_send_success(c1,"ÄãÒÑÔÚ·¿¼äÄÚ!ÎŞ·¨¼ÌĞø´´½¨!\n");break;}
-				if(!check_empty_room())//¼ì²éÊÇ·ñÓĞ¿Õ·¿¼ä
-				{confirm_send_success(c1,"µ±Ç°·¿¼äÒÑÂú£¬ÎŞ·¨¼ÌĞø´´½¨!\n");break;}
+				{confirm_send_success(c1,"ä½ å·²åœ¨æˆ¿é—´å†…!æ— æ³•ç»§ç»­åˆ›å»º!\n");break;}
+				if(!check_empty_room())//æ£€æŸ¥æ˜¯å¦æœ‰ç©ºæˆ¿é—´
+				{confirm_send_success(c1,"å½“å‰æˆ¿é—´å·²æ»¡ï¼Œæ— æ³•ç»§ç»­åˆ›å»º!\n");break;}
 				
 				player_room[empty_room_pointer].room_in_use=true;
 				player_room[empty_room_pointer].c[0]=c1;
 				c1->state=in_room;
 				c1->room_No=empty_room_pointer;
 
-				special_signal(c1,get_in_room);//´´½¨³É¹¦!
+				special_signal(c1,get_in_room);//åˆ›å»ºæˆåŠŸ!
 					
 				show_room_state();
 				break;
 			case 2:
-				if(c1->device!=android_phone)confirm_send_success(c1,"ÄúÑ¡ÔñÁË¼ÓÈë·¿¼ä!\n");
+				if(c1->device!=android_phone)confirm_send_success(c1,"æ‚¨é€‰æ‹©äº†åŠ å…¥æˆ¿é—´!\n");
 				if(c1->state==in_room||c1->state==in_game)
-				{confirm_send_success(c1,"ÄãÒÑÔÚ·¿¼äÄÚ!ÎŞ·¨¼ÌĞø¼ÓÈë!\n");continue;}
+				{confirm_send_success(c1,"ä½ å·²åœ¨æˆ¿é—´å†…!æ— æ³•ç»§ç»­åŠ å…¥!\n");continue;}
 				if(!check_in_use_room())
 				{special_signal(c1,no_room_in_use);continue;}
-				//{confirm_send_success(c1,"µ±Ç°Ã»ÓĞÊ¹ÓÃÕıÔÚÊ¹ÓÃµÄ·¿¼ä!ÇëÖØĞÂÑ¡Ôñ!\n");continue;}
+				//{confirm_send_success(c1,"å½“å‰æ²¡æœ‰ä½¿ç”¨æ­£åœ¨ä½¿ç”¨çš„æˆ¿é—´!è¯·é‡æ–°é€‰æ‹©!\n");continue;}
 
-				special_signal(c1,please_choose_room);//±íÃ÷¿ÉÒÔÑ¡Ôñ·¿¼äÁË
+				special_signal(c1,please_choose_room);//è¡¨æ˜å¯ä»¥é€‰æ‹©æˆ¿é—´äº†
 
 				show_all_room(c1);
-				while(true)//Ñ¡Ôñ·¿¼äËÀÑ­»·¿ªÊ¼
+				while(true)//é€‰æ‹©æˆ¿é—´æ­»å¾ªç¯å¼€å§‹
 				{				
 
-					memset(StrBuf,0,sizeof(StrBuf));addtext(StrBuf,get_client_message(c1));if(c1->F_offline){client_offline(c1);return;}//Íæ¼Ò×ö³öÑ¡Ôñ£¬Èç¹û´ËÊ±¶Ï¿ªÍ¨Ñ¶
+					memset(StrBuf,0,sizeof(StrBuf));addtext(StrBuf,get_client_message(c1));if(c1->F_offline){client_offline(c1);return;}//ç©å®¶åšå‡ºé€‰æ‹©ï¼Œå¦‚æœæ­¤æ—¶æ–­å¼€é€šè®¯
 
-					cout<<"ÓÃ»§ÊäÈë£º"<<StrBuf<<endl;
+					cout<<"ç”¨æˆ·è¾“å…¥ï¼š"<<StrBuf<<endl;
 					if(strlen(StrBuf)==1&&StrBuf[0]=='0')
 					{	if(c1->device!=android_phone)
-							confirm_send_success(c1,"ÄãÑ¡ÔñÈ¡Ïû¼ÓÈë·¿¼ä!¼´½«·µ»ØÔ­Ò³Ãæ¡­¡­\n");
+							confirm_send_success(c1,"ä½ é€‰æ‹©å–æ¶ˆåŠ å…¥æˆ¿é—´!å³å°†è¿”å›åŸé¡µé¢â€¦â€¦\n");
 						else
 							special_signal(c1,cancel_enter_room);
 						break;
 					}
 						
-					choice=atoi(StrBuf);//×ª»»Êı¾İÎªÊı×Ö
+					choice=atoi(StrBuf);//è½¬æ¢æ•°æ®ä¸ºæ•°å­—
 						
-					if(choice==0){confirm_send_success(c1,"ÊäÈëÁËÎŞĞ§Öµ!\n");continue;}
-					if(choice>=roomlimit||choice<0){confirm_send_success(c1,"ÊäÈë³¬³ö·¿¼äÊıÁ¿ÉÏÏŞ!\n");continue;}
+					if(choice==0){confirm_send_success(c1,"è¾“å…¥äº†æ— æ•ˆå€¼!\n");continue;}
+					if(choice>=roomlimit||choice<0){confirm_send_success(c1,"è¾“å…¥è¶…å‡ºæˆ¿é—´æ•°é‡ä¸Šé™!\n");continue;}
 
 					choice--;
 
-					if(player_room[choice].room_in_use==false){confirm_send_success(c1,"¸Ã·¿¼äÄÚÃ»ÈË!\n");continue;}
-					if(player_room[choice].c[playernumber-1]!=NULL){confirm_send_success(c1,"¸Ã·¿¼äÄÚÈËÂú!\n");continue;}
+					if(player_room[choice].room_in_use==false){confirm_send_success(c1,"è¯¥æˆ¿é—´å†…æ²¡äºº!\n");continue;}
+					if(player_room[choice].c[playernumber-1]!=NULL){confirm_send_success(c1,"è¯¥æˆ¿é—´å†…äººæ»¡!\n");continue;}
 							
-					c1->state=in_room;//Ö´ĞĞµ½ÕâÒ»²½±ØÈ»¼ÓÈë³É¹¦
-					c1->guest=true;//¼ÓÈë·¿¼äµÄÈËÊÇ·¿¼ä¿ÍÈË
+					c1->state=in_room;//æ‰§è¡Œåˆ°è¿™ä¸€æ­¥å¿…ç„¶åŠ å…¥æˆåŠŸ
+					c1->guest=true;//åŠ å…¥æˆ¿é—´çš„äººæ˜¯æˆ¿é—´å®¢äºº
 
 					player_room[choice].c[1]=c1;
 					c1->room_No=player_room[choice].c[0]->room_No;
 
-					special_signal(c1,enter_room_success);//¼ÓÈë³É¹¦!
+					special_signal(c1,enter_room_success);//åŠ å…¥æˆåŠŸ!
 
-					SuspendThread(hthread[player_room[choice].c[0]->member_No-1]);//Ëø×¡·¿¼äÖ÷ÈË¼àÌıÏß³Ì
-					special_signal(player_room[choice].c[0],someone_get_in);//¸æËß·¿¼äÖ÷ÈËÓĞÈË½øÀ´ÁË
-					memset(StrBuf,0,sizeof(StrBuf));addtext(StrBuf,c1->client_name);addtext(StrBuf,"\n");//¸æËß·¿¼äÖ÷ÈË½øÀ´ÕßĞÕÃû
+					SuspendThread(hthread[player_room[choice].c[0]->member_No-1]);//é”ä½æˆ¿é—´ä¸»äººç›‘å¬çº¿ç¨‹
+					special_signal(player_room[choice].c[0],someone_get_in);//å‘Šè¯‰æˆ¿é—´ä¸»äººæœ‰äººè¿›æ¥äº†
+					memset(StrBuf,0,sizeof(StrBuf));addtext(StrBuf,c1->client_name);addtext(StrBuf,"\n");//å‘Šè¯‰æˆ¿é—´ä¸»äººè¿›æ¥è€…å§“å
 					confirm_send_success(player_room[choice].c[0],StrBuf);memset(StrBuf,0,sizeof(StrBuf));
-					if(player_room[choice].c[0]->device==win_console)special_signal(player_room[choice].c[0],show_choice);//Èç¹ûÊÇwin_console¿Í»§¶Ë£¬ÏÔÊ¾Ñ¡Ïî
-					ResumeThread(hthread[player_room[choice].c[0]->member_No-1]);//½â·Å·¿¼äÖ÷ÈË¼àÌıÏß³Ì
-					show_room_state();//·şÎñÆ÷×Ô¼ºÏÔÊ¾ÏÖÔÚ·¿¼ä×´Ì¬
+					if(player_room[choice].c[0]->device==win_console)special_signal(player_room[choice].c[0],show_choice);//å¦‚æœæ˜¯win_consoleå®¢æˆ·ç«¯ï¼Œæ˜¾ç¤ºé€‰é¡¹
+					ResumeThread(hthread[player_room[choice].c[0]->member_No-1]);//è§£æ”¾æˆ¿é—´ä¸»äººç›‘å¬çº¿ç¨‹
+					show_room_state();//æœåŠ¡å™¨è‡ªå·±æ˜¾ç¤ºç°åœ¨æˆ¿é—´çŠ¶æ€
 					break;
 			
-				}//Ñ¡Ôñ·¿¼äËÀÑ­»·½áÊø
+				}//é€‰æ‹©æˆ¿é—´æ­»å¾ªç¯ç»“æŸ
 				break;
 			case 3:
-				if(c1->device==win_console)confirm_send_success(c1,"ÄúÑ¡ÔñÁËÍË³ö·¿¼ä!\n");
-				if(c1->state==in_game){confirm_send_success(c1,"ÕıÔÚÓÎÏ·ÖĞ!ÎŞ·¨ÍË³ö·¿¼ä!\n");continue;}
-				if(c1->state!=in_room){special_signal(c1,you_not_in_room);continue;}//Äãµ±Ç°Ã»ÔÚ·¿¼äÄÚ!ÇëÖØĞÂÑ¡Ôñ
+				if(c1->device==win_console)confirm_send_success(c1,"æ‚¨é€‰æ‹©äº†é€€å‡ºæˆ¿é—´!\n");
+				if(c1->state==in_game){confirm_send_success(c1,"æ­£åœ¨æ¸¸æˆä¸­!æ— æ³•é€€å‡ºæˆ¿é—´!\n");continue;}
+				if(c1->state!=in_room){special_signal(c1,you_not_in_room);continue;}//ä½ å½“å‰æ²¡åœ¨æˆ¿é—´å†…!è¯·é‡æ–°é€‰æ‹©
 
-				exit_the_room(c1);//Ö´ĞĞÍË³ö
-				special_signal(c1,leave_room);//¸æËßËûÍË³ö³É¹¦!
+				exit_the_room(c1);//æ‰§è¡Œé€€å‡º
+				special_signal(c1,leave_room);//å‘Šè¯‰ä»–é€€å‡ºæˆåŠŸ!
 
-				show_room_state();//·şÎñÆ÷×Ô¼ºÏÔÊ¾ÏÖÔÚ·¿¼ä×´Ì¬
+				show_room_state();//æœåŠ¡å™¨è‡ªå·±æ˜¾ç¤ºç°åœ¨æˆ¿é—´çŠ¶æ€
 				break;
-			case 4://Ë¢ĞÂÍæ¼ÒÁĞ±í
+			case 4://åˆ·æ–°ç©å®¶åˆ—è¡¨
 				if(c1->device==win_console)special_signal(c1,please_cls);
-				show_all_client(c1);//Ë¢ĞÂÁĞ±í
+				show_all_client(c1);//åˆ·æ–°åˆ—è¡¨
 				continue;
 			case 5:
-				if(c1->device==win_console)confirm_send_success(c1,"ÄúÑ¡ÔñÁË¿ªÊ¼Õ½¶·!\n");
+				if(c1->device==win_console)confirm_send_success(c1,"æ‚¨é€‰æ‹©äº†å¼€å§‹æˆ˜æ–—!\n");
 
-				if(c1->state==in_game){confirm_send_success(c1,"ÄãÒÑÔÚÓÎÏ·ÖĞ!ÎŞ·¨¿ªÊ¼ĞÂµÄ!\n");continue;}
-				if(c1->state!=in_room){special_signal(c1,you_not_in_room);continue;}//Äã²»ÔÚ·¿¼äÄÚ!ÎŞ·¨¿ªÊ¼Õ½¶·!
-				if(c1->guest){confirm_send_success(c1,"Äã²»ÊÇ·¿¼äÖ÷ÈË!ÎŞ·¨¿ªÊ¼Õ½¶·!\n");continue;}//Èç¹û²»ÊÇ·¿¼äÖ÷ÈË
-				if(player_room[c1->room_No].c[1]==NULL){confirm_send_success(c1,"·¿¼äÄÚÈËÊı²»×ã!ÎŞ·¨¿ªÊ¼Õ½¶·!\n");continue;}//Èç¹û·¿¼äÃ»ÓĞ±ö¿Í
+				if(c1->state==in_game){confirm_send_success(c1,"ä½ å·²åœ¨æ¸¸æˆä¸­!æ— æ³•å¼€å§‹æ–°çš„!\n");continue;}
+				if(c1->state!=in_room){special_signal(c1,you_not_in_room);continue;}//ä½ ä¸åœ¨æˆ¿é—´å†…!æ— æ³•å¼€å§‹æˆ˜æ–—!
+				if(c1->guest){confirm_send_success(c1,"ä½ ä¸æ˜¯æˆ¿é—´ä¸»äºº!æ— æ³•å¼€å§‹æˆ˜æ–—!\n");continue;}//å¦‚æœä¸æ˜¯æˆ¿é—´ä¸»äºº
+				if(player_room[c1->room_No].c[1]==NULL){confirm_send_success(c1,"æˆ¿é—´å†…äººæ•°ä¸è¶³!æ— æ³•å¼€å§‹æˆ˜æ–—!\n");continue;}//å¦‚æœæˆ¿é—´æ²¡æœ‰å®¾å®¢
 				
-				//Ö´ĞĞµ½ÕâÀï£¬ÒÑ¾­È·¶¨ÔÚ·¿¼äÖĞµ±Ö÷ÈË£¬¶øÇÒÓĞ±ö¿Í
+				//æ‰§è¡Œåˆ°è¿™é‡Œï¼Œå·²ç»ç¡®å®šåœ¨æˆ¿é—´ä¸­å½“ä¸»äººï¼Œè€Œä¸”æœ‰å®¾å®¢
 				for(count=0;count<playernumber;count++)
 					if(player_room[c1->room_No].c[count]!=NULL)
 					{
 						player_room[c1->room_No].c[count]->state=in_game;
-						if(count!=0)special_signal(player_room[c1->room_No].c[count],event_happen_N);//ÓÉÓÚËûÈË»¹¿¨ÔÚserver·şÎñ¶Ë£¬ÓÃevent_happen_N¼¤»îÒ»ÏÂ½øÈëÕ½¶·º¯Êı
+						if(count!=0)special_signal(player_room[c1->room_No].c[count],event_happen_N);//ç”±äºä»–äººè¿˜å¡åœ¨serveræœåŠ¡ç«¯ï¼Œç”¨event_happen_Næ¿€æ´»ä¸€ä¸‹è¿›å…¥æˆ˜æ–—å‡½æ•°
 					}
 					else
 					{
 						for(count=0;count<playernumber;count++)
 							if(player_room[c1->room_No].c[count]!=NULL)
 								player_room[c1->room_No].c[count]->state=in_room;
-						confirm_send_success(c1,"·¿¼äÄÚÈËÊı²»×ã!ÎŞ·¨¿ªÊ¼Õ½¶·!\n");break;
+						confirm_send_success(c1,"æˆ¿é—´å†…äººæ•°ä¸è¶³!æ— æ³•å¼€å§‹æˆ˜æ–—!\n");break;
 					}
 				if(count!=playernumber)break;
 
-				start_fight(c1,&player_room[c1->room_No]);//Ö´ĞĞÍê±íÊ¾ÓÎÏ·½áÊø
-				c1->state=in_room;//ÓÎÏ·½áÊø£¬»Øµ½·¿¼ä×´Ì¬
+				start_fight(c1,&player_room[c1->room_No]);//æ‰§è¡Œå®Œè¡¨ç¤ºæ¸¸æˆç»“æŸ
+				c1->state=in_room;//æ¸¸æˆç»“æŸï¼Œå›åˆ°æˆ¿é—´çŠ¶æ€
 				break;
-			case 6://Ìí¼Ó»úÆ÷ÈË
-				if(c1->state!=in_room)//È·¶¨²»ÊÇÔÚÓÎÏ·ÖĞ£¬Èç¹û²»ÔÚ·¿¼äÄÚ
-				{special_signal(c1,you_not_in_room);continue;}//Äã²»ÔÚ·¿¼äÄÚ!
-				if(player_room[c1->room_No].c[0]->member_No!=c1->member_No){confirm_send_success(c1,"Ö»ÓĞ·¿¼äÖ÷ÈË²ÅÄÜÌí¼Ó»úÆ÷ÈË!\n");continue;}	
-				if(player_room[c1->room_No].c[1]!=NULL){confirm_send_success(c1,"·¿¼äÄÚÒÑÓĞ±ğÈË!ÎŞ·¨Ìí¼Ó!\n");continue;}
+			case 6://æ·»åŠ æœºå™¨äºº
+				if(c1->state!=in_room)//ç¡®å®šä¸æ˜¯åœ¨æ¸¸æˆä¸­ï¼Œå¦‚æœä¸åœ¨æˆ¿é—´å†…
+				{special_signal(c1,you_not_in_room);continue;}//ä½ ä¸åœ¨æˆ¿é—´å†…!
+				if(player_room[c1->room_No].c[0]->member_No!=c1->member_No){confirm_send_success(c1,"åªæœ‰æˆ¿é—´ä¸»äººæ‰èƒ½æ·»åŠ æœºå™¨äºº!\n");continue;}	
+				if(player_room[c1->room_No].c[1]!=NULL){confirm_send_success(c1,"æˆ¿é—´å†…å·²æœ‰åˆ«äºº!æ— æ³•æ·»åŠ !\n");continue;}
 				player_room[c1->room_No].c[1]=&Robot[c1->room_No];
-				confirm_send_success(c1,"Ìí¼Ó³É¹¦!!!\n");
+				confirm_send_success(c1,"æ·»åŠ æˆåŠŸ!!!\n");
 				break;
-			case 7://ÒÆ³ı»úÆ÷ÈË
-				if(c1->state!=in_room){special_signal(c1,you_not_in_room);continue;}//Èç¹û²»ÔÚ·¿¼äÄÚ
-				if(player_room[c1->room_No].c[1]==NULL){confirm_send_success(c1,"·¿¼äÄÚÃ»ÓĞ»úÆ÷ÈË!ÎŞ·¨ÒÆ³ı!\n");continue;}
-				if(player_room[c1->room_No].c[1]->member_No==c1->member_No){confirm_send_success(c1,"ÄãÊÇ·¿¼ä¿ÍÈË£¬Ö»ÓĞ·¿¼äÖ÷ÈËÓĞÈ¨ÏŞĞŞ¸Ä»úÆ÷ÈË!\n");continue;}
-				if(player_room[c1->room_No].c[1]->member_No!=robot_symbol){confirm_send_success(c1,"·¿¼äÄÚÓĞ»îÈË!ÎŞ·¨ÒÆ³ı»úÆ÷ÈË!\n");continue;}
-				player_room[c1->room_No].c[1]=NULL;//½øĞĞÒÆ³ı
-				confirm_send_success(c1,"ÒÆ³ı³É¹¦!\n");
+			case 7://ç§»é™¤æœºå™¨äºº
+				if(c1->state!=in_room){special_signal(c1,you_not_in_room);continue;}//å¦‚æœä¸åœ¨æˆ¿é—´å†…
+				if(player_room[c1->room_No].c[1]==NULL){confirm_send_success(c1,"æˆ¿é—´å†…æ²¡æœ‰æœºå™¨äºº!æ— æ³•ç§»é™¤!\n");continue;}
+				if(player_room[c1->room_No].c[1]->member_No==c1->member_No){confirm_send_success(c1,"ä½ æ˜¯æˆ¿é—´å®¢äººï¼Œåªæœ‰æˆ¿é—´ä¸»äººæœ‰æƒé™ä¿®æ”¹æœºå™¨äºº!\n");continue;}
+				if(player_room[c1->room_No].c[1]->member_No!=robot_symbol){confirm_send_success(c1,"æˆ¿é—´å†…æœ‰æ´»äºº!æ— æ³•ç§»é™¤æœºå™¨äºº!\n");continue;}
+				player_room[c1->room_No].c[1]=NULL;//è¿›è¡Œç§»é™¤
+				confirm_send_success(c1,"ç§»é™¤æˆåŠŸ!\n");
 				continue;
 
 			default:
-				if(c1->device==win_console)confirm_send_success(c1,"ÊäÈëÁËÎŞĞ§Öµ!\n");
+				if(c1->device==win_console)confirm_send_success(c1,"è¾“å…¥äº†æ— æ•ˆå€¼!\n");
 				
-		}//switch½áÊø
+		}//switchç»“æŸ
 					
-	}//Ñ¡Ôñ¿ªÊ¼ËÀÑ­»·½áÊø
+	}//é€‰æ‹©å¼€å§‹æ­»å¾ªç¯ç»“æŸ
 }
 
-void accept_client()//½øĞĞ¼àÌı£¬½ÓÊÜ¿Í»§¶Ë·¢ËÍÏûÏ¢µÄÇëÇó
+void accept_client()//è¿›è¡Œç›‘å¬ï¼Œæ¥å—å®¢æˆ·ç«¯å‘é€æ¶ˆæ¯çš„è¯·æ±‚
 {
-	char StrBuf[MAX_PATH] = { 0 };//¶¨Òå±äÁ¿´æ´¢½ÓÊÕµ½µÄÊı¾İ
-	char Buf[MAX_PATH] = { 0 };//×¨ÃÅÓÃÓÚ×ª»»·Ç×Ö·ûĞÎÊ½ÊıÖµÎª×Ö·û
+	char StrBuf[MAX_PATH] = { 0 };//å®šä¹‰å˜é‡å­˜å‚¨æ¥æ”¶åˆ°çš„æ•°æ®
+	char Buf[MAX_PATH] = { 0 };//ä¸“é—¨ç”¨äºè½¬æ¢éå­—ç¬¦å½¢å¼æ•°å€¼ä¸ºå­—ç¬¦
 	
-	/*µÚËÄ²½ ½ÓÊÜ¿Í»§Á¬½ÓÇëÇó*/
-	sockaddr_in ClientAddr[memberlimit+1]= { 0 };//´´½¨½á¹¹Ìå ÓÃÓÚ»ñÈ¡¿Í»§¶Ë socketaddr ½á¹¹Ìå
-	int len=sizeof(ClientAddr);//»ñÈ¡½á¹¹Ìå´óĞ¡
-	bool claim_limit=false;//ÊÇ·ñÏÔÊ¾¹ı·şÎñÆ÷³ĞÔØÈËÊı´ïµ½ÉÏÏŞ
+	/*ç¬¬å››æ­¥ æ¥å—å®¢æˆ·è¿æ¥è¯·æ±‚*/
+	sockaddr_in ClientAddr[memberlimit+1]= { 0 };//åˆ›å»ºç»“æ„ä½“ ç”¨äºè·å–å®¢æˆ·ç«¯ socketaddr ç»“æ„ä½“
+	int len=sizeof(ClientAddr);//è·å–ç»“æ„ä½“å¤§å°
+	bool claim_limit=false;//æ˜¯å¦æ˜¾ç¤ºè¿‡æœåŠ¡å™¨æ‰¿è½½äººæ•°è¾¾åˆ°ä¸Šé™
 
-	CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)server_monitor,NULL, NULL, NULL);//¹ÜÀíÔ±È¨ÏŞ²é¿´ËùÓĞ
+	CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)server_monitor,NULL, NULL, NULL);//ç®¡ç†å‘˜æƒé™æŸ¥çœ‹æ‰€æœ‰
 	//Sleep(500);
-	while(true)//¿ªÊ¼¼àÌıËÀÑ­»·
+	while(true)//å¼€å§‹ç›‘å¬æ­»å¾ªç¯
 	{	
 		check_emptyspace();
 
-		if(empty_player_pointer>=memberlimit)//¼ì²â·şÎñÆ÷¸ººÉÊÇ·ñÂúÔØ£¿Èç¹ûÂúÔØ
+		if(empty_player_pointer>=memberlimit)//æ£€æµ‹æœåŠ¡å™¨è´Ÿè·æ˜¯å¦æ»¡è½½ï¼Ÿå¦‚æœæ»¡è½½
 		{
 			if(!claim_limit)
 			{
-				cout<<"·şÎñÆ÷³ĞÔØÈËÊı´ïµ½×î´ó!ÎŞ·¨ÔÙ¼ÌĞø½ÓÊÕ!\n";claim_limit=true;//ÉèÎªÒÑÏÔÊ¾¹ı¸ººÉ×î´ó
+				cout<<"æœåŠ¡å™¨æ‰¿è½½äººæ•°è¾¾åˆ°æœ€å¤§!æ— æ³•å†ç»§ç»­æ¥æ”¶!\n";claim_limit=true;//è®¾ä¸ºå·²æ˜¾ç¤ºè¿‡è´Ÿè·æœ€å¤§
 			}
-			//²»¶Ï½ÓÊÜ¹ıÁ¿µÄÇëÇó°ü£¬²¢²»Óè»Ø¸´£¬µ±¸ººÉÏÂ½µÊ±£¬ºó½ÓÈëµÄµÚÒ»¸ö¿Í»§¶Ë½«»á±»ºöÊÓ
+			//ä¸æ–­æ¥å—è¿‡é‡çš„è¯·æ±‚åŒ…ï¼Œå¹¶ä¸äºˆå›å¤ï¼Œå½“è´Ÿè·ä¸‹é™æ—¶ï¼Œåæ¥å…¥çš„ç¬¬ä¸€ä¸ªå®¢æˆ·ç«¯å°†ä¼šè¢«å¿½è§†
 			g_ClientSocket[memberlimit]= accept(g_ServerSocket, (sockaddr*)&ClientAddr[memberlimit], &len);
-			hthread[memberlimit]=CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)communicate_with_this_client_O,&Membership[memberlimit], NULL, NULL);//µ÷ÓÃº¯ÊıÓë¸Ã¿Í»§¶Ë½øĞĞ¹µÍ¨
+			hthread[memberlimit]=CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)communicate_with_this_client_O,&Membership[memberlimit], NULL, NULL);//è°ƒç”¨å‡½æ•°ä¸è¯¥å®¢æˆ·ç«¯è¿›è¡Œæ²Ÿé€š
 		}
-		else//·şÎñÆ÷Ã»ÂúÔØ£¬½øĞĞ¼àÌı£¬½ÓÊÜ¿Í»§¶Ë·¢ËÍÏûÏ¢µÄÇëÇó
+		else//æœåŠ¡å™¨æ²¡æ»¡è½½ï¼Œè¿›è¡Œç›‘å¬ï¼Œæ¥å—å®¢æˆ·ç«¯å‘é€æ¶ˆæ¯çš„è¯·æ±‚
 		{
-			if(claim_limit)//Èç¹ûÖ®Ç°ÉùÃ÷¹ı·şÎñÆ÷ÂúÔØÁË£¬ÓÉÓÚ¼ì²éµ½¿ÕÎ»£¬ÏÔÊ¾·şÎñÆ÷¿ÉÒÔ¼ÌĞø½ÓÊÜ¿Í»§¶ËÇëÇóÁË
+			if(claim_limit)//å¦‚æœä¹‹å‰å£°æ˜è¿‡æœåŠ¡å™¨æ»¡è½½äº†ï¼Œç”±äºæ£€æŸ¥åˆ°ç©ºä½ï¼Œæ˜¾ç¤ºæœåŠ¡å™¨å¯ä»¥ç»§ç»­æ¥å—å®¢æˆ·ç«¯è¯·æ±‚äº†
 			{
 				CloseHandle(hthread[memberlimit]);
 				claim_limit=false;
-				cout<<"·şÎñÆ÷³ĞÔØÊıÁ¿ÏÂ½µ!¿ÉÒÔ¼ÌĞø½ÓÊÕ¿Í»§¶ËÁË!\n";
+				cout<<"æœåŠ¡å™¨æ‰¿è½½æ•°é‡ä¸‹é™!å¯ä»¥ç»§ç»­æ¥æ”¶å®¢æˆ·ç«¯äº†!\n";
 			}
 
-			cout<<"¼ÌĞø¼àÌıÖĞ¡­¡­£¨Ä¿Ç°ÓĞ"<<client_number<<"¸ö¿Í»§¶ËÒÑÁ¬½Ó£¬ÉÏÏŞÎª"<<memberlimit<<"¸ö£©\n";
-			g_ClientSocket[empty_player_pointer]= accept(g_ServerSocket, (sockaddr*)&ClientAddr[empty_player_pointer], &len);//½ÓÊÜ¿Í»§¶ËµÄÁ¬½ÓÇëÇó
-			Membership[empty_player_pointer].member_in_use=true;//½«·şÎñÆ÷¸ÃÎ»ÖÃ±êÎª¡°ÒÑÕ¼ÓÃ¡±
-			client_number++;
-			cout<<"ÒÑ½ÓÊÜ¿Í»§¶ËÁ¬½ÓÇëÇó¡­¡­\n";
+			cout<<"ç»§ç»­ç›‘å¬ä¸­â€¦â€¦ï¼ˆç›®å‰æœ‰"<<client_number<<"ä¸ªå®¢æˆ·ç«¯å·²è¿æ¥ï¼Œä¸Šé™ä¸º"<<memberlimit<<"ä¸ªï¼‰\n";
+			g_ClientSocket[empty_player_pointer]= accept(g_ServerSocket, (sockaddr*)&ClientAddr[empty_player_pointer], &len);//æ¥å—å®¢æˆ·ç«¯çš„è¿æ¥è¯·æ±‚
 			
-		/*µÚÎå²½ ½ÓÊÜÊı¾İ*/
-			//Ïß³Ì£¨°²È«ÊôĞÔ£¬³õÊ¼Õ»´óĞ¡£¬º¯ÊıÃû£¬º¯Êı´«²Î£¬Ïß³Ì×´Ì¬±êÖ¾£¬Ïß³Ìid±£´æµØÖ·£©
-			//Ïß³Ì×´Ì¬±êÖ¾£ºCREATE_SUSPENDED¹ÒÆğ/0Á¢¼´¼¤»î
-			hthread[empty_player_pointer]=CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)communicate_with_this_client,&Membership[empty_player_pointer], NULL, NULL);//µ÷ÓÃº¯ÊıÓë¸Ã¿Í»§¶Ë½øĞĞ¹µÍ¨
+			SOCKADDR_IN   sockAddr; 
+			int   iLen=sizeof(sockAddr); 
+			getpeername(g_ClientSocket[empty_player_pointer] ,(struct   sockaddr   *)&sockAddr,&iLen);//è·å–å®¢æˆ·ç«¯çš„ip
+			cout<<"\næ–°ç”¨æˆ·å·²è¿æ¥ï¼å®¢æˆ·ç«¯IP: "<<::inet_ntoa(sockAddr.sin_addr)<<"ç«¯å£å·: "<<ntohs(sockAddr.sin_port)<<endl;
+			
+			Membership[empty_player_pointer].member_in_use=true;//å°†æœåŠ¡å™¨è¯¥ä½ç½®æ ‡ä¸ºâ€œå·²å ç”¨â€
+			client_number++;
+			cout<<"å·²æ¥å—å®¢æˆ·ç«¯è¿æ¥è¯·æ±‚â€¦â€¦\n";
+			
+		/*ç¬¬äº”æ­¥ æ¥å—æ•°æ®*/
+			//çº¿ç¨‹ï¼ˆå®‰å…¨å±æ€§ï¼Œåˆå§‹æ ˆå¤§å°ï¼Œå‡½æ•°åï¼Œå‡½æ•°ä¼ å‚ï¼Œçº¿ç¨‹çŠ¶æ€æ ‡å¿—ï¼Œçº¿ç¨‹idä¿å­˜åœ°å€ï¼‰
+			//çº¿ç¨‹çŠ¶æ€æ ‡å¿—ï¼šCREATE_SUSPENDEDæŒ‚èµ·/0ç«‹å³æ¿€æ´»
+			hthread[empty_player_pointer]=CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)communicate_with_this_client,&Membership[empty_player_pointer], NULL, NULL);//è°ƒç”¨å‡½æ•°ä¸è¯¥å®¢æˆ·ç«¯è¿›è¡Œæ²Ÿé€š
 
-		}//´´½¨ºÍĞÂ¿Í»§¶ËµÄ¹µÍ¨Á¬½Ó½áÊø£¬ÖØĞÂ¼ì²â·şÎñÆ÷ÊÇ·ñÂúÔØ£¿ÂúÔØÔòÍ£Ö¹¼àÌı£¬Ã»ÂúÔØÔò¼ÌĞø¼àÌıÊÇ·ñÓĞÏÂÒ»¸ö¿Í»§¶ËµÄÇëÇó
+		}//åˆ›å»ºå’Œæ–°å®¢æˆ·ç«¯çš„æ²Ÿé€šè¿æ¥ç»“æŸï¼Œé‡æ–°æ£€æµ‹æœåŠ¡å™¨æ˜¯å¦æ»¡è½½ï¼Ÿæ»¡è½½åˆ™åœæ­¢ç›‘å¬ï¼Œæ²¡æ»¡è½½åˆ™ç»§ç»­ç›‘å¬æ˜¯å¦æœ‰ä¸‹ä¸€ä¸ªå®¢æˆ·ç«¯çš„è¯·æ±‚
 
-	}//¼àÌıËÀÑ­»·½áÊø£¨³ı·Ç·şÎñÆ÷¹Ø±Õ£¬·ñÔòËÀÑ­»·½«Ò»Ö±½øĞĞÏÂÈ¥£©
+	}//ç›‘å¬æ­»å¾ªç¯ç»“æŸï¼ˆé™¤éæœåŠ¡å™¨å…³é—­ï¼Œå¦åˆ™æ­»å¾ªç¯å°†ä¸€ç›´è¿›è¡Œä¸‹å»ï¼‰
 
 }
 
@@ -274,27 +280,27 @@ void accept_client()//½øĞĞ¼àÌı£¬½ÓÊÜ¿Í»§¶Ë·¢ËÍÏûÏ¢µÄÇëÇó
 
 bool TCP_InitSocket(char *Addr, int Port)
 {
-	/*µÚÒ»²½ µ÷ÓÃsocketº¯Êı´´½¨socket*/
+	/*ç¬¬ä¸€æ­¥ è°ƒç”¨socketå‡½æ•°åˆ›å»ºsocket*/
 	g_ServerSocket = socket(AF_INET, SOCK_STREAM, 0);  
-	//Èç¹û´´½¨Ê§°ÜÔò·µ»Ø
-	if(g_ServerSocket == INVALID_SOCKET){cout<<"´´½¨ipÊ§°Ü!\n";return false;}
+	//å¦‚æœåˆ›å»ºå¤±è´¥åˆ™è¿”å›
+	if(g_ServerSocket == INVALID_SOCKET){cout<<"åˆ›å»ºipå¤±è´¥!\n";return false;}
 
-	/*µÚ¶ş²½ bindº¯Êı½øĞĞip°ó¶¨*/
+	/*ç¬¬äºŒæ­¥ bindå‡½æ•°è¿›è¡Œipç»‘å®š*/
 	sockaddr_in ServerAddr;
 
-	//inet_addrº¯Êı½«×Ö·û´®×ª»»ÎªIN_ADDR½á¹¹µÄÕıÈ·µØÖ·
-	ServerAddr.sin_addr.S_un.S_addr = inet_addr(Addr);//ÉèÖÃ°ó¶¨µÄIP
-	ServerAddr.sin_family = AF_INET;//Ö¸¶¨µØÖ·×åÎªIPv4
-	ServerAddr.sin_port = htons(Port);//ÉèÖÃ¼àÌı¶Ë¿Ú
+	//inet_addrå‡½æ•°å°†å­—ç¬¦ä¸²è½¬æ¢ä¸ºIN_ADDRç»“æ„çš„æ­£ç¡®åœ°å€
+	ServerAddr.sin_addr.S_un.S_addr = inet_addr(Addr);//è®¾ç½®ç»‘å®šçš„IP
+	ServerAddr.sin_family = AF_INET;//æŒ‡å®šåœ°å€æ—ä¸ºIPv4
+	ServerAddr.sin_port = htons(Port);//è®¾ç½®ç›‘å¬ç«¯å£
 
-	//Èç¹û°ó¶¨Ê§°ÜÔò·µ»Ø
+	//å¦‚æœç»‘å®šå¤±è´¥åˆ™è¿”å›
 	if(bind(g_ServerSocket, (sockaddr*)&ServerAddr, sizeof(ServerAddr)) != 0)
-		{return false;}//cout<<"°ó¶¨ipÊ§°Ü!\n";
+		{return false;}//cout<<"ç»‘å®šipå¤±è´¥!\n";
 
-	/*µÚÈı²½ ¼àÌı¶Ë¿Ú*/
-	if(listen(g_ServerSocket, SOMAXCONN) != 0)return false;//Èç¹û¼àÌıÊ§°Ü·µ»Ø
+	/*ç¬¬ä¸‰æ­¥ ç›‘å¬ç«¯å£*/
+	if(listen(g_ServerSocket, SOMAXCONN) != 0)return false;//å¦‚æœç›‘å¬å¤±è´¥è¿”å›
 
-	return true;//·µ»Ø´´½¨¼àÌı¶Ë¿Ú³É¹¦
+	return true;//è¿”å›åˆ›å»ºç›‘å¬ç«¯å£æˆåŠŸ
 }
 
 

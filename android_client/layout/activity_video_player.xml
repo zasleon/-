@@ -1,0 +1,172 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:paddingTop="1dp"
+    android:paddingBottom="1dp"
+    tools:context="com.example.xielm.myapplication.video_player">
+
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:editable="false"
+        android:elegantTextHeight="false"
+        android:visibility="invisible"/>
+
+
+
+    <SurfaceView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:id="@+id/surfaceView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:background="#00000000"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true" />
+
+    <SeekBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/seekBar"
+        android:indeterminate="false"
+        android:layout_above="@+id/video_rate"
+        android:layout_toLeftOf="@+id/button8"
+        android:layout_toRightOf="@+id/button9"
+        android:layout_toEndOf="@+id/button9"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00:00"
+        android:id="@+id/max_duration"
+        android:textColor="#ffffffff"
+        android:layout_above="@+id/video_rate"
+        android:layout_toRightOf="@+id/seekBar"
+        android:layout_toEndOf="@+id/seekBar"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00:00   "
+        android:id="@+id/current_time"
+        android:textColor="#ffffffff"
+        android:layout_alignBottom="@+id/seekBar"
+        android:layout_toLeftOf="@+id/seekBar"
+        android:layout_toStartOf="@+id/seekBar"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="倍 速"
+        android:id="@+id/video_rate"
+        android:textColor="#ffffffff"
+        android:clickable="true"
+        android:background="#00000000"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/button8"
+        android:layout_toStartOf="@+id/button8"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button8"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:background="#00000000"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button9"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="#00000000"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="test"
+        android:id="@+id/ttt"
+        android:visibility="invisible"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/editText"
+        android:layout_toEndOf="@+id/editText"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/jump_to_this_position"
+        android:layout_above="@+id/editText"
+        android:layout_centerHorizontal="true"
+        android:background="@android:color/black"
+        android:textColor="#ffffffff"
+        android:editable="false"
+        android:visibility="invisible"/>
+
+    <com.example.xielm.myapplication.VerticalProgressBar
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:id="@+id/volumeProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:max="100"
+        android:progress="1"
+        android:visibility="visible"
+        android:indeterminate="false"
+        android:layout_above="@+id/current_time"
+        android:layout_alignRight="@+id/current_time"
+        android:layout_alignEnd="@+id/current_time"
+        android:layout_alignTop="@+id/jump_to_this_position"/>
+    <com.example.xielm.myapplication.VerticalProgressBar
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:id="@+id/brightnessProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:max="100"
+        android:progress="1"
+        android:visibility="visible"
+        android:indeterminate="false"
+        android:layout_above="@+id/max_duration"
+        android:layout_alignRight="@+id/max_duration"
+        android:layout_alignEnd="@+id/max_duration"
+        android:layout_alignTop="@+id/jump_to_this_position"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="音量"
+        android:gravity="center"
+        android:id="@+id/volume_signal"
+        android:layout_above="@+id/volumeProgressBar"
+        android:layout_alignLeft="@+id/volumeProgressBar"
+        android:layout_alignStart="@+id/volumeProgressBar"
+        android:layout_alignRight="@+id/volumeProgressBar"
+        android:layout_alignEnd="@+id/volumeProgressBar"
+        android:background="@android:color/black"
+        android:textColor="@android:color/white"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="亮度"
+        android:gravity="center"
+        android:id="@+id/brightness_signal"
+        android:layout_alignBottom="@+id/volume_signal"
+        android:layout_alignLeft="@+id/brightnessProgressBar"
+        android:layout_alignStart="@+id/brightnessProgressBar"
+        android:layout_alignRight="@+id/max_duration"
+        android:layout_alignEnd="@+id/max_duration"
+        android:textColor="@android:color/white"
+        android:background="@android:color/black"/>
+
+</RelativeLayout>

@@ -1,0 +1,189 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.example.xielm.myapplication.fight_room">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:id="@+id/rival_blood"
+        android:textSize="25dp"
+        android:layout_alignParentTop="true"
+        android:layout_toStartOf="@+id/F_topmiddle"
+        android:background="#ffff3640"
+        android:textColor="#ff86fffd"
+        android:layout_toLeftOf="@+id/F_topmiddle"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/F_topmiddle"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:text="   "/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:id="@+id/rival_attack"
+        android:textSize="25dp"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/F_topmiddle"
+        android:layout_toEndOf="@+id/F_topmiddle"
+        android:background="#fff6ff53"
+        android:textColor="#ff76182d"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="发动普攻"
+        android:id="@+id/attack_choice"
+        android:layout_below="@+id/end_operation"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textSize="15dp"
+        android:layout_toStartOf="@+id/my_blood"
+        android:layout_toLeftOf="@+id/my_blood"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="对手名字"
+        android:id="@+id/rival_name"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/attack_choice"
+        android:layout_alignEnd="@+id/attack_choice"
+        android:layout_alignBottom="@+id/F_topmiddle"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="手牌数：0"
+        android:id="@+id/rival_card_number"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/rival_name"
+        android:layout_above="@+id/scrollViewlog"
+        android:layout_toStartOf="@+id/end_operation"
+        android:layout_toLeftOf="@+id/end_operation"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="角色信息"
+        android:id="@+id/battle_info"
+        android:layout_toRightOf="@+id/rival_attack"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:textSize="15dp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="发动效果"
+        android:id="@+id/launcheffect"
+        android:layout_below="@+id/end_operation"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:textSize="15dp"
+        android:layout_alignLeft="@+id/battle_info"
+        android:layout_alignStart="@+id/battle_info"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:id="@+id/my_blood"
+        android:textSize="25dp"
+        android:background="#ffff3640"
+        android:textColor="#ff86fffd"
+        android:layout_below="@+id/end_operation"
+        android:layout_alignRight="@+id/rival_blood"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:id="@+id/my_attack"
+        android:textSize="25dp"
+        android:background="#fff6ff53"
+        android:textColor="#ff76182d"
+        android:layout_below="@+id/end_operation"
+        android:layout_alignLeft="@+id/rival_attack"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="结束回合"
+        android:id="@+id/end_operation"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="15dp"/>
+
+    <HorizontalScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/horizontalScrollView"
+        android:stretchColumns="0"
+        android:background="#ffff43bf"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/attack_choice">
+        <TableLayout
+            android:stretchColumns="0"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/linearLayout"
+            android:background="#ffff66e6"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/attack_choice">
+        </TableLayout>
+
+    </HorizontalScrollView>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollViewlog"
+        android:fillViewport="false"
+        android:background="#ff5bffc8"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/battle_info"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/end_operation">
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:id="@+id/history"
+            android:background="#ff31ffa9">
+        </TableLayout>
+    </ScrollView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/whether_your_turn"
+        android:layout_above="@+id/attack_choice"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textSize="15dp"
+        android:textColor="#ff97ff4f"
+        android:background="#f5ff0726"/>
+
+</RelativeLayout>
